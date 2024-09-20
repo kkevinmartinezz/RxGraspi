@@ -1,4 +1,5 @@
 This Repository was created to create an implementation using RustworkX Python Library to create, filter, and visualize a Graph.
+This was also made with PyCharm.
 ____
 All main files are in the src directory including the rxGraspi.py file, which holds the code to creating, filtering, and visualizing graphs, as well as two additional directory's: test and images directory.
 Add all tests in given test directory with proper formatting starting with the "x, y, z" dimensions in that order and format then a newline and fill graph based on Graspi documentation, follow link for more details: https://owodolab.github.io/graspi/inputFormats.html
