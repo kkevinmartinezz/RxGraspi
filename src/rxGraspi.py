@@ -1,12 +1,6 @@
 import rustworkx as rx
 import math
-
-from graphviz.dot import subgraph, graph_head
-from numpy.ma.core import append, empty
-from rustworkx import dfs_search, dfs_edges, bfs_search, dijkstra_shortest_paths, PyGraph, PyDiGraph, dijkstra_search
-from rustworkx.visualization import mpl_draw
-import matplotlib.pyplot as plt
-import graphviz
+from rustworkx import dijkstra_shortest_paths
 from rustworkx.visualization import graphviz_draw
 import time
 import os
@@ -247,10 +241,10 @@ def shortest_path_btwn_nodes(g, source, target):
 def main():
     testGraphRunTime(file10, True, 1)
     testFilterGraph(graph, file10,True,1)
-    #bfs(graph, 2)
-    #dfs(graph,2)
-    shortest_path_from_cathode(filteredGraph,)
-    #shortest_path_btwn_nodes(filteredGraph, 2,49)
+    bfs(graph, 2)
+    dfs(graph,2)
+    shortest_path_from_cathode(filteredGraph,6)
+    shortest_path_btwn_nodes(filteredGraph, 2,49)
 
 if __name__=="__main__":
     main()
