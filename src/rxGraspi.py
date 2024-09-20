@@ -1,14 +1,24 @@
+import tracemalloc
+from dataclasses import dataclass
+from inspect import trace
+from os import times
+from turtledemo.penrose import start
+
 import rustworkx as rx
 import math
 from rustworkx import dijkstra_shortest_paths
 from rustworkx.visualization import graphviz_draw
 import time
 import os
+
+from src.dict_csv_test import mydict
+
 os.environ["PATH"] += os.pathsep + 'C:/Program Files/Graphviz/bin'
 
 from rustworkx.visit import BFSVisitor, DijkstraVisitor
 from rustworkx.visit import DFSVisitor
 
+import csv
 
 test = "tests/test.txt"
 file10 = "tests/10x10.txt"
@@ -154,19 +164,31 @@ def visualizeGraphGV(g, file):
 
 
 def testGraphRunTime(filename, visualize, times):
-    totalTime = 0
+    # totalTime = 0
+    #
+    # stats = 0
     if visualize:
         for i in range(times):
-            start = time.time()
+            # start = time.time()
+            # tracemalloc.start()
             createGraph(filename)
             visualizeGraphGV(graph, "images/rustworkx_graph.jpg")
-            totalTime += time.time() - start
+            # totalTime += time.time() - start
+            # stats = tracemalloc.get_traced_memory()
+            # tracemalloc.stop()
+            # stats = stats[1] - stats[0]
     else:
         for i in range(times):
-            start = time.time()
+            # start = time.time()
+            # tracemalloc.start()
             createGraph(filename)
-            totalTime += time.time() - start
-    print(totalTime / times)
+            # stats = tracemalloc.get_traced_memory()
+            # tracemalloc.stop()
+            # totalTime += time.time() - start
+            # stats = stats[1] - stats[0]
+
+    # print(totalTime / times)
+    # return totalTime / times, stats
 
 
 def connectedComponents(edge):
@@ -196,14 +218,20 @@ def filterGraph(g, visualize):
     return edges
 
 def testFilterGraph(g, filename, visualize, times):
-    totalTime = 0
+    # totalTime = 0
+    # tracemalloc.start()
     for i in range(times):
-        start = time.time()
+        # start = time.time()
         createGraph(filename)
         filterGraph(g, visualize)
-        totalTime += time.time() - start
-    print(totalTime / times)
-    return totalTime / times
+    #print(totalTime / times)
+    # stats = tracemalloc.get_traced_memory()
+    # tracemalloc.stop()
+    # totalTime += time.time() - start
+    # stats = stats[1] - stats[0]
+
+    #return tuple of average and total memory used.
+    # return (totalTime / times), stats
 
 #Uses DFS to traverse graph and print's all edges reachable from source node
 def dfs(g, source):
@@ -223,28 +251,126 @@ def bfs(g, source):
 
 #finds shortest path between the cathode and target node
 def shortest_path_from_cathode(g, target):
+    # total_time = 0.0
+    # start = time.time()
+    # tracemalloc.start()
     cathode = g.num_nodes()-1
     path = dijkstra_shortest_paths(g, cathode, target, weight_fn=None, default_weight=1)
-    if(len(path) == 0):
-        print("No Path Found")
-    else:
-        print('Shortest Path between', cathode, 'and', target , path)
+    # stats = tracemalloc.get_traced_memory()
+    # tracemalloc.stop()
+    # total_time += time.time() - start
+    # stats = stats[1] - stats[0]
+    # if len(path) == 0:
+    #     print("No Path Found")
+    # else:
+    #     print('Shortest Path between', cathode, 'and', target , path)
+    # return total_time, stats
 
 def shortest_path_btwn_nodes(g, source, target):
     path = dijkstra_shortest_paths(g, source, target, weight_fn=None, default_weight=1)
-    if(len(path) == 0):
-        print("No Path Found")
-    else:
-        print('Shortest Path between', source, 'and', target , path)
+    # if len(path) == 0:
+    #     print("No Path Found")
+    # else:
+    #     print('Shortest Path between', source, 'and', target , path)
+
+def run_all_three_functions(filename):
+    GC_total_time, FG_total_time, SP_total_time = 0,0,0
+
+    start = time.time()
+    testGraphRunTime(filename, False, 1)
+    GC_total_time += time.time() - start
+
+    start = time.time()
+    testFilterGraph(graph, filename, False, 1)
+    FG_total_time += time.time() - start
+
+    start = time.time()
+    shortest_path_from_cathode(filteredGraph, 4)
+    SP_total_time += time.time() - start
+
+    GC_mem, FG_mem, SP_mem = 0, 0, 0
+
+    tracemalloc.start()
+    testGraphRunTime(filename, False, 1)
+    stats = tracemalloc.get_traced_memory()
+    tracemalloc.stop()
+    GC_mem = stats[1] - stats[0]
+
+    tracemalloc.start()
+    testFilterGraph(graph, filename, False, 1)
+    stats = tracemalloc.get_traced_memory()
+    tracemalloc.stop()
+    FG_mem = stats[1] - stats[0]
+
+    tracemalloc.start()
+    shortest_path_from_cathode(filteredGraph, 4)
+    stats = tracemalloc.get_traced_memory()
+    tracemalloc.stop()
+    SP_mem = stats[1] - stats[0]
+
+    total_mem = GC_mem + FG_mem + SP_mem
+
+    return GC_total_time, FG_total_time, SP_total_time, total_mem
 
 # Defining main function
 def main():
-    testGraphRunTime(file10, True, 1)
-    testFilterGraph(graph, file10,True,1)
-    bfs(graph, 2)
-    dfs(graph,2)
-    shortest_path_from_cathode(filteredGraph,6)
-    shortest_path_btwn_nodes(filteredGraph, 2,49)
+    # GC_time_memory_tuple = testGraphRunTime(file100, True, 1)
+    # FG_time_memory_tuple = testFilterGraph(graph, file100, True, 1)
+    # SP_time_memory_tuple = shortest_path_from_cathode(filteredGraph, 4)
+    # print('GC:', GC_time_memory_tuple)
+    # print('FG:', FG_time_memory_tuple)
+    # print('SP:', SP_time_memory_tuple)
+    with open('output_data.csv', 'w', newline='') as file:
+        field = ["n", " n2", " Graph creation", " Connected Components", " Shortest Path", " total", " Memory Usage"]
+        writer = csv.writer(file)
+        # field = f"{field[0]} {field[1]:<8} {field[2]:<24} {field[3]:<24} {field[4]:<24} {field[5]:<24}"
+        f = "{:<5} {:<8} {:<24} {:<24} {:<24} {:<24} {:<24}".format(*field)
+        writer.writerow([f])
+        x = 0
+        n = 0
+        n_2 = 0
+        dimensions = 2
+        while x != 5:
+            if x == 0:
+                data = run_all_three_functions(file10)
+                n = 10
+                n_2 = n * n
+                total_time = data[0] + data[1] + data[3]
+                row = f"{n:<5} {n_2:<8} {data[0]:<24} {data[1]:<24} {data[2]:<24} {total_time:<24} {data[3]:<24}"
+                writer.writerow([row])
+
+            elif x == 1:
+                data = run_all_three_functions(file50)
+                n = 50
+                n_2 = n * n
+                total_time = data[0] + data[1] + data[3]
+                row = f"{n:<5} {n_2:<8} {data[0]:<24} {data[1]:<24} {data[2]:<24} {total_time:<24} {data[3]:<24}"
+                writer.writerow([row])
+            elif x == 2:
+                n = 100
+                data = run_all_three_functions(file100)
+                n_2 = n * n
+                total_time = data[0] + data[1] + data[3]
+                row = f"{n:<5} {n_2:<8} {data[0]:<24} {data[1]:<24} {data[2]:<24} {total_time:<24} {data[3]:<24}"
+                writer.writerow([row])
+            elif x == 3:
+                n = 500
+                data = run_all_three_functions(file500)
+                n_2 = n * n
+                total_time = data[0] + data[1] + data[3]
+                row = f"{n:<5} {n_2:<8} {data[0]:<24} {data[1]:<24} {data[2]:<24} {total_time:<24} {data[3]:<24}"
+                writer.writerow([row])
+            elif x == 4:
+                n = 1000
+                data = run_all_three_functions(file1000)
+                n_2 = n * n
+                total_time = data[0] + data[1] + data[3]
+                row = f"{n:<5} {n_2:<8} {data[0]:<24} {data[1]:<24} {data[2]:<24} {total_time:<24} {data[3]:<24}"
+                writer.writerow([row])
+            x += 1
+
+
+
 
 if __name__=="__main__":
     main()
