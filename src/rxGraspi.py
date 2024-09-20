@@ -249,7 +249,7 @@ def main():
     testFilterGraph(graph, file10,True,1)
     #bfs(graph, 2)
     #dfs(graph,2)
-    shortest_path_from_cathode(filteredGraph,35)
+    shortest_path_from_cathode(filteredGraph,)
     #shortest_path_btwn_nodes(filteredGraph, 2,49)
 
 if __name__=="__main__":
