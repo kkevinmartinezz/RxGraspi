@@ -1,4 +1,4 @@
-[**_REPO SUMMARY_**](url)
+**_REPO SUMMARY_**
 
 This Repository was created to create an implementation using RustworkX Python Library to create, filter, and visualize a Graph.
 This was also made with PyCharm.
