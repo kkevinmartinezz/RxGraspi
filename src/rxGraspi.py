@@ -291,9 +291,9 @@ def run_functions_w_visualization(filename, graphVisualFileName, filteredFileNam
 def main():
     x = 0
     #only does 10x10 50x50 and 100x100 because it can not visualize 500x500 or 1000x1000 due to integer overflow
-    while x != 3:
+    for x in range(3):
         run_functions_w_visualization(file_list[x], image[x], filtered_image[x])
-        x += 1
+
     # testGraphRunTime(file_list[1], True, 1, image[1])
     # testFilterGraph(graph, file_list[1], True, 1, filtered_image[1])
     # shortest_path_from_cathode(filteredGraph, 4)
