@@ -34,7 +34,7 @@ For a more in-depth representation of what packages were present during coding h
 * rustworkx==0.15.1
 * six==1.16.0
 ________
-***rxGraspi API***
+***_rxGraspi API_***
 
 GLOBAL VARIABLES:
 * graph: using the PyGraph class provided by rustworkx, nodes will be added to this variable to visualize a graph.
