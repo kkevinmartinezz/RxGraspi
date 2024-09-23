@@ -8,7 +8,9 @@ ______
 
 You will need to download 2-3 packages
 1. rustworkx package (used 15.1 version)
+   
    _pip install rustoworkx_
+   
 3. graphviz
 4. matplotlib
 
