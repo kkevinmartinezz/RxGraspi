@@ -13,6 +13,7 @@ You will need to download 2-3 packages
    
 3. graphviz
 4. matplotlib
+5. Also need to install pillow and pydot
 
 According to rustworkx documentation, using Graphviz for graphs with a lot of nodes and matplotlib for smaller graphs is recommended. Our implementation has two functions for visualizing a graph but mainly works with graphviz, this is due to the fact we are working with bigger graphs.
 ______
