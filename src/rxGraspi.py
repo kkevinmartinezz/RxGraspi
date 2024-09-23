@@ -26,7 +26,9 @@ file50 = "tests/test50.txt"
 file100 = "tests/test100.txt"
 file500 = "tests/test500.txt"
 file1000 = "tests/test1000.txt"
-
+file_list = [file10, file50, file100, file500, file1000]
+image = ["images/rustwork10x10.jpg", "images/rustwork50x50.jpg", "images/rustwork100x100.jpg", "images/rustwork500x500.jpg", "images/rustwork1000x1000.jpg"]
+filtered_image = ["filtered_images/filtered_rustwork10x10.jpg", "filtered_images/filtered_rustwork50x50.jpg", "filtered_images/filtered_rustwork100x100.jpg", "filtered_images/filtered_rustwork500x500.jpg", "filtered_images/filtered_rustwork1000x1000.jpg"]
 file3D10 = "tests/10x10x10.txt"
 file3D50 = "tests/50x50x50.txt"
 file3D100 = "tests/100x100x100.txt"
@@ -163,11 +165,11 @@ def visualizeGraphGV(g, file):
                   graph_attr=graph_dict, method ="neato")
 
 
-def testGraphRunTime(filename, visualize, times):
+def testGraphRunTime(filename, visualize, times, graphVisualFileName):
     if visualize:
         for i in range(times):
             createGraph(filename)
-            visualizeGraphGV(graph, "images/rustworkx_graph.jpg")
+            visualizeGraphGV(graph, graphVisualFileName)
     else:
         for i in range(times):
             createGraph(filename)
@@ -184,7 +186,7 @@ def connectedComponents(edge):
     return True
 
 
-def filterGraph(g, visualize):
+def filterGraph(g, visualize, filteredImageFile):
     global filteredGraph
 
     edges = g.filter_edges(connectedComponents)
@@ -197,13 +199,13 @@ def filterGraph(g, visualize):
 
     filteredGraph = g.edge_subgraph(edgeList)
     if visualize:
-        visualizeGraphGV(filteredGraph, "images/rustworkx_subgraph.jpg")
+        visualizeGraphGV(filteredGraph, filteredImageFile)
     return edges
 
-def testFilterGraph(g, filename, visualize, times):
+def testFilterGraph(g, filename, visualize, times, filteredFileName):
     for i in range(times):
         createGraph(filename)
-        filterGraph(g, visualize)
+        filterGraph(g, visualize, filteredFileName)
 
 #Uses DFS to traverse graph and print's all edges reachable from source node
 def dfs(g, source):
@@ -238,17 +240,19 @@ def shortest_path_btwn_nodes(g, source, target):
     else:
         print('Shortest Path between', source, 'and', target , path)
 
+
+
 #runs and returns data for time it took to graph, filter, and find the shortest path. Also returns total memory usage for all three functions.
 #runs two times, can possibly be shortened but this is function is simply for documentation and not important for the rest of the code to run.
 def run_all_three_functions(filename):
     GC_total_time, FG_total_time, SP_total_time = 0,0,0
 
     start = time.time()
-    testGraphRunTime(filename, False, 1)
+    testGraphRunTime(filename, False, 1, "image/rustworkx.jpg")
     GC_total_time += time.time() - start
 
     start = time.time()
-    testFilterGraph(graph, filename, False, 1)
+    testFilterGraph(graph, filename, False, 1, "image/rustworkx_subgraph.jpg")
     FG_total_time += time.time() - start
 
     start = time.time()
@@ -258,13 +262,13 @@ def run_all_three_functions(filename):
     GC_mem, FG_mem, SP_mem = 0, 0, 0
 
     tracemalloc.start()
-    testGraphRunTime(filename, False, 1)
+    testGraphRunTime(filename, False, 1, "image/rustworkx.jpg")
     stats = tracemalloc.get_traced_memory()
     tracemalloc.stop()
     GC_mem = stats[1] - stats[0]
 
     tracemalloc.start()
-    testFilterGraph(graph, filename, False, 1)
+    testFilterGraph(graph, filename, False, 1, "image/rustworkx_subgraph.jpg")
     stats = tracemalloc.get_traced_memory()
     tracemalloc.stop()
     FG_mem = stats[1] - stats[0]
@@ -279,12 +283,20 @@ def run_all_three_functions(filename):
 
     return GC_total_time, FG_total_time, SP_total_time, total_mem
 
+def run_functions_w_visualization(filename, graphVisualFileName, filteredFileName):
+    testGraphRunTime(filename,True,1, graphVisualFileName)
+    testFilterGraph(graph,filename,True,1, filteredFileName)
+    shortest_path_from_cathode(filteredGraph,4)
 # Defining main function
 def main():
-    testGraphRunTime(file10, True, 1)
-    testFilterGraph(graph, file10, True, 1)
-    shortest_path_from_cathode(filteredGraph, 4)
-
+    x = 0
+    #only does 10x10 50x50 and 100x100 because it can not visualize 500x500 or 1000x1000 due to integer overflow
+    while x != 3:
+        run_functions_w_visualization(file_list[x], image[x], filtered_image[x])
+        x += 1
+    # testGraphRunTime(file_list[1], True, 1, image[1])
+    # testFilterGraph(graph, file_list[1], True, 1, filtered_image[1])
+    # shortest_path_from_cathode(filteredGraph, 4)
     '''Bottom Code was made to document runtime and Memory Usage into CSV file'''
     # with open('output_data.csv', 'w', newline='') as file:
     #     field = ["n", " n2", " Graph creation", " Connected Components", " Shortest Path", " total", " Memory Usage"]
