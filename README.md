@@ -104,8 +104,8 @@ _def dfs_search(g, source):_
 * outputs a list of all connected nodes found from source node while running dfs.
 
 _def bfs_search(g, source):_
-Takes in graph as well as a source node to start a bfs search.
-outputs a list of all connected nodes found from source node while running bfs.
+* Takes in graph as well as a source node to start a bfs search.
+* outputs a list of all connected nodes found from source node while running bfs.
 
 _def shortest_path_btwn_nodes(g, source ,target):_
 * takes in 3 parameters, a graph, a source node, and a target node 
