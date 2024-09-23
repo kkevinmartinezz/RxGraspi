@@ -63,61 +63,61 @@ Edge: Custom class that stores edge data:
 
 FUNCTIONS:
 
-createGraph(filename):
+_createGraph(filename):_
 * Takes in a string file name as a parameter which is used to read a file and graphs the nodes depending on the format of the file. Currently only allows for structured data Adds a node and edges between it and all its possible neighbors. 
 
-add_cathode_node(dimX, dimY, dimZ):
+_add_cathode_node(dimX, dimY, dimZ):_
 * takes in dimension parameters given in file which should have already been initialized in the createGraph() function.
 * Called at end of createGraph to add cathode node and connects it to bottom black layer.
 
-node_attr_fn(node):
+_node_attr_fn(node):_
 * Takes in a node class as a parameter.
 * Makes a dictionary that adds attributes onto the nodes for graph visualization.
 * Class is used as a parameter when visualizing graph using graphViz format. 
 
-visualizeGraphMPL(g):
+_visualizeGraphMPL(g):_
 * Takes in a graph g
 * Visualizes the graph using mpl_draw function given by the rustworkx package and matplotlib package
 
-visualizeGraphGV(g, file):
+_visualizeGraphGV(g, file):_
 * Takes in a graph g and a filename to store the filtered graph visualization.
 * Visualizes graph using the graphviz_draw() format.
 * Recommended by rustworkx documentation for graphs with a lot of nodes. 
 
-testGraphRuntime(filename, visualize, times):
+_testGraphRuntime(filename, visualize, times):_
 * Takes in a string filename, a boolean variable visualize that states if user wants a visual of graph, and an int variable of how many times it wishes the program to run.
 
-connectedComponents(edge):
+_connectedComponents(edge):_
 * Function used to filter edges by node color
 * Required for built in graph filtering
 
-def filterGraph(g, visualize):
+_def filterGraph(g, visualize):_
 * Filtering function that takes in the variable that allows for visualization or no visualization as well as a given graph and an image filename of where to output the visualization
 * Uses connected components to get desired filtered edge list.which we use to make a tuple of nodes.
 * uses this list of node tuples to create filtered graph with rustworkx built in function edge_subgraph().
 
-def testFilterGraph(g, filename, visualize, times, filteredFileName):
+_def testFilterGraph(g, filename, visualize, times, filteredFileName):_
 * Takes in a graph, string filename, a boolean variable visualize that states if the user wants a visual of the graph after filtering, int variable times of how many times the user wishes the program to run, and an image extension name called filteredFileName of where to put the visualization
 
-def dfs_search(g, source):
+_def dfs_search(g, source):_
 * Takes in graph as well as a source node to start a dfs search.
 * outputs a list of all connected nodes found from source node while running dfs.
 
-def bfs_search(g, source)
+_def bfs_search(g, source):_
 Takes in graph as well as a source node to start a bfs search.
 outputs a list of all connected nodes found from source node while running bfs.
 
-def shortest_path_btwn_nodes(g, source ,target)
+_def shortest_path_btwn_nodes(g, source ,target):_
 * takes in 3 parameters, a graph, a source node, and a target node 
 * uses dijkstra_shortest_path() function given by rustworkx in order to find the shortest path between the source node and the target node.
 * outputs a dict with the nodes in order that will result in the shortest path if path exists. 
 
-def shortest_path_from_cathode(g, target):
+_def shortest_path_from_cathode(g, target):_
 * does same thing as shotrest_path_btwn_nodes() but only takes in a target node to find the shortest path between cathode and target node.
 
-def run_all_three_functions(filename):
+_def run_all_three_functions(filename):_
 * takes in a filename and runs multiple tests to figure out total runtime as well as memory usage of functions used to create, filter, and output shortest path of a graph.
 * Does not visualize since some files can not visualize and produce an error due to Integer Overflow.
 
-def run_functions_w_visualization(filename, graphVisualFileName, filteredFileName):
+_def run_functions_w_visualization(filename, graphVisualFileName, filteredFileName):_
 * runs testGraphRunTime(), testFilterGraph(), and shortest_path_from_cathode() functions for a given file and outputs both graph and filtered graph visualizations into given image file names.
