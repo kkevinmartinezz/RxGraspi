@@ -175,7 +175,7 @@ def testGraphRunTime(filename, visualize, times, graphVisualFileName):
             createGraph(filename)
 
 
-'''Commented out for proper GitHub Commit messaging
+
 def connectedComponents(edge):
     node1 = graph.get_node_data(edge.node1)
     node2 = graph.get_node_data(edge.node2)
@@ -207,6 +207,7 @@ def testFilterGraph(g, filename, visualize, times, filteredFileName):
         createGraph(filename)
         filterGraph(g, visualize, filteredFileName)
 
+'''Commented out for proper GitHub Commit messaging
 #Uses DFS to traverse graph and print's all edges reachable from source node
 def dfs(g, source):
     nodes = []
