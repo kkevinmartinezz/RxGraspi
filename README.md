@@ -7,6 +7,8 @@ ____
 
 _rxGraspi_ file and both tests and _images_/_filtered_images_ directories are considered obsolete right now. The main file to run is _rxGraspiWebsite.py_, this file contains all the proper and necessary functions needed to create, filter, and visualize a graph. As well as finding the shortest path between the cathode node and all black nodes. The new outputted images from this file will not be outputted to the _graph_ directory and all the necessary test files are now in the _testCases_ directory. Future work will be done to remove these obsolete files but for now remain for further debugging strategies. 
 Furthermore, this will mean that a new api description for the new _rxGraspiWebsite.py_ will be created in the future. But for now, all the functions described in the current _rxGraspi API_ still have the same goals so this is not necessary at the moment but will be changed in the near future.
+
+Link for GitHub Repo of website: https://github.com/8michael8/GraSPI_Website
 ______
 **_REPO DIRECTORY INFORMATION_**
 
