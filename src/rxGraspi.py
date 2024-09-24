@@ -207,7 +207,7 @@ def testFilterGraph(g, filename, visualize, times, filteredFileName):
         createGraph(filename)
         filterGraph(g, visualize, filteredFileName)
 
-'''Commented out for proper GitHub Commit messaging
+
 #Uses DFS to traverse graph and print's all edges reachable from source node
 def dfs(g, source):
     nodes = []
@@ -242,6 +242,7 @@ def shortest_path_btwn_nodes(g, source, target):
         print('Shortest Path between', source, 'and', target , path)
 
 
+'''Commented out for proper GitHub Commit messaging
 
 #runs and returns data for time it took to graph, filter, and find the shortest path. Also returns total memory usage for all three functions.
 #runs two times, can possibly be shortened but this is function is simply for documentation and not important for the rest of the code to run.
