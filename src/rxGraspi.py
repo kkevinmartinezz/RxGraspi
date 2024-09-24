@@ -164,7 +164,7 @@ def visualizeGraphGV(g, file):
     graphviz_draw(g, filename=file, node_attr_fn=node_attr_fn,
                   graph_attr=graph_dict, method ="neato")
 
-'''
+
 def testGraphRunTime(filename, visualize, times, graphVisualFileName):
     if visualize:
         for i in range(times):
@@ -175,7 +175,7 @@ def testGraphRunTime(filename, visualize, times, graphVisualFileName):
             createGraph(filename)
 
 
-
+'''Commented out for proper GitHub Commit messaging
 def connectedComponents(edge):
     node1 = graph.get_node_data(edge.node1)
     node2 = graph.get_node_data(edge.node2)
