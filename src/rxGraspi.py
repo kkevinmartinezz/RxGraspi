@@ -164,7 +164,7 @@ def visualizeGraphGV(g, file):
     graphviz_draw(g, filename=file, node_attr_fn=node_attr_fn,
                   graph_attr=graph_dict, method ="neato")
 
-
+'''
 def testGraphRunTime(filename, visualize, times, graphVisualFileName):
     if visualize:
         for i in range(times):
@@ -287,6 +287,7 @@ def run_functions_w_visualization(filename, graphVisualFileName, filteredFileNam
     testGraphRunTime(filename,True,1, graphVisualFileName)
     testFilterGraph(graph,filename,True,1, filteredFileName)
     shortest_path_from_cathode(filteredGraph,4)
+    '''
 # Defining main function
 def main():
     x = 0
